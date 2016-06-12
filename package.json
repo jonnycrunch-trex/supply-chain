@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "t-rex hackathon supply chain",
   "main": "server.js",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "node test.js",
