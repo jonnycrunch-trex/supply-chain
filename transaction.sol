@@ -2,6 +2,7 @@
 contract supplyChain {
 	address person2;
 	address person1;
+	uint dab = 2;
 	bool person1Agree = false;
 	bool person2Agree = false;
 	event agreement(bool, bool);
@@ -17,4 +18,11 @@ contract supplyChain {
 	function person2yes(bool lolk){
 	    bool person2Agree = lolk;
 	}
-}   
+	function looping(){
+	    while (dab++ < 1000) {
+	        if (AgreedOrNot()) {
+	            break;
+	        }
+    	}
+    }
+}
