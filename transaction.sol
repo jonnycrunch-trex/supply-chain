@@ -15,6 +15,9 @@ contract supplyChain {
 	function person1yes(bool lolk){
 	    bool person1Agree = lolk;
 	}
+	function() { 
+	    throw; 
+	}
 	function person2yes(bool lolk){
 	    bool person2Agree = lolk;
 	}
