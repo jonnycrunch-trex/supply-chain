@@ -5,10 +5,28 @@ const
   PORT = 3000,
   app = express(),
   Web3 = require('web3'),
-  web3 = new Web3()
+  web3 = new Web3(),
+  // Requidity = require('requidity'),
+  // requidity = new Requidity(web3),
+  fs = require('fs')
+  solc = require('solc')
 
-web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'))
+web3.setProvider(new web3.providers.HttpProvider('http://192.168.2.3:8545'))
+// fs.chmodSync(process.cwd() + '/node_modules/solc/', 0777)
 
+const contractAddress = web3.toHex('hello world')
+
+// requidity('./transaction.sol')
+
+fs.readFile('./transaction.sol', (err, buffer) => {
+  if (err) throw err
+  compiledContracts = solc.compile(buffer.toString(), 1)
+  var MyContract = web3.eth.contract(compiledContracts.interface)
+  console.log('contract instance works?', web3.isConnected())
+  // var contractInstance = MyContract.at('9ae3e04119d11973645a6e7f9b08a4d8be55ff0d')
+
+})
+/*
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 // general index route - probably will remove
@@ -60,3 +78,4 @@ app.listen(PORT, function(){
   console.log(`This is a transmission from ${PORT}`)
   console.log(web3.isConnected())
 })
+*/
