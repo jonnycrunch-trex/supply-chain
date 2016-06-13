@@ -5,7 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.15.1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "web3": "^0.17.0-alpha"
   },
   "devDependencies": {},
   "scripts": {

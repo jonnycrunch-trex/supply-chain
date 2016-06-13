@@ -3,7 +3,11 @@ const
   bodyParser = require('body-parser'),
   path = require('path'),
   PORT = 3000,
-  app = express()
+  app = express(),
+  Web3 = require('web3'),
+  web3 = new Web3()
+
+web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -32,8 +36,9 @@ app.route('/tx/:id')
 
 app.route('/tx/:id/send')
   .post((req, res) => {
-    console.log('Transaction', req.params.id)
-    res.json(req.body)
+    web3.eth.
+    // console.log('Transaction', req.params.id)
+    // res.json(req.body)
     res.end()
   })
 
@@ -53,4 +58,5 @@ app.route('/tx/:id/call')
 
 app.listen(PORT, function(){
   console.log(`This is a transmission from ${PORT}`)
+  console.log(web3.isConnected())
 })
