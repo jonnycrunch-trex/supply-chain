@@ -22,11 +22,15 @@ contract supplyChain {
 	    bool person2Agree = lolk;
 	}
 	function looping(){
-	    while (dab++ < 1000) {
-	        if (AgreedOrNot()) {
-	            agreement(true, person1, person2);
-	            break;
-	        }
+		while (dab++ < 1000) {
+		        if (AgreedOrNot()) {
+		            agreement(true, person1, person2);
+		            break;
+		        }
+    		}
     	}
+
+    function verify( bytes32 hash, uint8 v, bytes32 r, bytes32 s) constant returns(address retAddr) {
+        retAddr= ecrecover(hash, v, r, s);
     }
 }
