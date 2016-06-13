@@ -5,7 +5,7 @@ contract supplyChain {
 	uint dab = 2;
 	bool person1Agree = false;
 	bool person2Agree = false;
-	event agreement(bool, bool);
+	event agreement(bool, address, address);
 	function AgreedOrNot() constant returns (bool){
 	    if (person1Agree == true && person2Agree == true)
 	        return true;
@@ -21,6 +21,7 @@ contract supplyChain {
 	function looping(){
 	    while (dab++ < 1000) {
 	        if (AgreedOrNot()) {
+	            agreement(true, person1, person2);
 	            break;
 	        }
     	}
