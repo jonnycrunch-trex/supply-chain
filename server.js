@@ -11,7 +11,7 @@ const
   fs = require('fs')
   solc = require('solc')
 
-web3.setProvider(new web3.providers.HttpProvider('http://192.168.2.3:8545'))
+web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'))
 // fs.chmodSync(process.cwd() + '/node_modules/solc/', 0777)
 
 const contractAddress = web3.toHex('hello world')
@@ -21,10 +21,26 @@ const contractAddress = web3.toHex('hello world')
 fs.readFile('./transaction.sol', (err, buffer) => {
   if (err) throw err
   compiledContracts = solc.compile(buffer.toString(), 1)
-  var MyContract = web3.eth.contract(compiledContracts.interface)
-  console.log('contract instance works?', web3.isConnected())
-  // var contractInstance = MyContract.at('9ae3e04119d11973645a6e7f9b08a4d8be55ff0d')
+  var code = compiledContracts.contracts.supplyChain.assembly['.code'];
+  var abi = JSON.parse(compiledContracts.contracts.supplyChain.interface);
 
+  // console.log(code)
+  // console.log(abi)
+  console.log(web3.eth.accounts[0])
+  web3.eth.contract(abi).new({from: web3.eth.accounts[0], data: code}, function (err, contract) {
+     if (!err && contract.address) {
+        console.log("deployed on:", contract.address);
+     } else {
+       console.error(err);
+     }
+   }
+  );
+  // var MyContract = web3.eth.contract(JSON.parse(compiledContracts.contracts.supplyChain.interface))
+  // console.log('contract instance works?', web3.isConnected())
+  // var contractInstance = MyContract.at('9ae3e04119d11973645a6e7f9b08a4d8be55ff0d')
+  // var contractInstance = MyContract.at('9bfba03e4bc38b0f4e2283dac7a2da967ff6513f')
+  // var result = contractInstance.person1yes(true);
+  // console.log(result)
 })
 /*
 app.use(bodyParser.json())
@@ -32,8 +48,15 @@ app.use(bodyParser.urlencoded({extended: true}))
 // general index route - probably will remove
 app.route('/')
   .get((req, res) => {
-    console.log('Get route works')
-    res.send('Very nice')
+    fs.readFile('./transaction.sol', (err, buffer) => {
+      if (err) throw err
+      compiledContracts = solc.compile(buffer.toString(), 1)
+      // var MyContract = web3.eth.contract(compiledContracts.contracts.supplyChain.interface)
+      console.log('contract instance works?', web3.isConnected())
+      // var contractInstance = MyContract.at('9ae3e04119d11973645a6e7f9b08a4d8be55ff0d')
+      res.send(compiledContracts.contracts.supplyChain)
+      res.end()
+    })
   })
   .post((req, res) => {
     console.log(req.body)
